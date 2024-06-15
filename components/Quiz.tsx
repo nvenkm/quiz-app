@@ -15,104 +15,127 @@ const Quiz = ({ data }: { data: QuizQuestionInterface[] }) => {
   //all the global states getting from local storage
   const allowedMinutes = 10;
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(() => {
-    const savedCurrentQuestionIndex = localStorage.getItem(
-      "currentQuestionIndex"
-    );
-    if (savedCurrentQuestionIndex) {
-      return JSON.parse(savedCurrentQuestionIndex);
+    if (typeof window !== "undefined") {
+      const savedCurrentQuestionIndex = localStorage.getItem(
+        "currentQuestionIndex"
+      );
+      if (savedCurrentQuestionIndex) {
+        return JSON.parse(savedCurrentQuestionIndex);
+      }
     }
     return 0;
   });
   const [selectedAnswers, setSelectedAnswers] = useState<string[]>(() => {
-    const savedSelectedAnswers = localStorage.getItem("selectedAnswers");
-    if (savedSelectedAnswers) {
-      return JSON.parse(savedSelectedAnswers);
+    if (typeof window !== "undefined") {
+      const savedSelectedAnswers = localStorage.getItem("selectedAnswers");
+      if (savedSelectedAnswers) {
+        return JSON.parse(savedSelectedAnswers);
+      }
     }
     return [];
   });
   const [showResult, setShowResult] = useState(() => {
-    const savedShowResult = localStorage.getItem("showResult");
-    if (savedShowResult) {
-      return JSON.parse(savedShowResult);
+    if (typeof window !== "undefined") {
+      const savedShowResult = localStorage.getItem("showResult");
+      if (savedShowResult) {
+        return JSON.parse(savedShowResult);
+      }
     }
     return false;
   });
   const [seconds, setSeconds] = useState(() => {
-    const savedSeconds = localStorage.getItem("seconds");
-    if (savedSeconds) {
-      return JSON.parse(savedSeconds);
+    if (typeof window !== "undefined") {
+      const savedSeconds = localStorage.getItem("seconds");
+      if (savedSeconds) {
+        return JSON.parse(savedSeconds);
+      }
     }
     return 0;
   });
   const [minutes, setMinutes] = useState(() => {
-    const savedMinutes = localStorage.getItem("minutes");
-    if (savedMinutes) {
-      return JSON.parse(savedMinutes);
+    if (typeof window !== "undefined") {
+      const savedMinutes = localStorage.getItem("minutes");
+      if (savedMinutes) {
+        return JSON.parse(savedMinutes);
+      }
     }
     return 0;
   });
   const handle = useFullScreenHandle();
   const quizAppRef = useRef(null);
 
-  //update the state from local storage
   useEffect(() => {
-    localStorage.setItem(
-      "currentQuestionIndex",
-      JSON.stringify(currentQuestionIndex)
-    );
+    if (typeof window !== "undefined") {
+      localStorage.setItem(
+        "currentQuestionIndex",
+        JSON.stringify(currentQuestionIndex)
+      );
+    }
   }, [currentQuestionIndex]);
 
   useEffect(() => {
-    localStorage.setItem("selectedAnswers", JSON.stringify(selectedAnswers));
+    if (typeof window !== "undefined") {
+      localStorage.setItem("selectedAnswers", JSON.stringify(selectedAnswers));
+    }
   }, [selectedAnswers]);
 
   useEffect(() => {
-    localStorage.setItem("minutes", JSON.stringify(minutes));
+    if (typeof window !== "undefined") {
+      localStorage.setItem("minutes", JSON.stringify(minutes));
+    }
   }, [minutes]);
 
   useEffect(() => {
-    localStorage.setItem("seconds", JSON.stringify(seconds));
+    if (typeof window !== "undefined") {
+      localStorage.setItem("seconds", JSON.stringify(seconds));
+    }
   }, [seconds]);
 
   useEffect(() => {
-    localStorage.setItem("showResult", JSON.stringify(showResult));
+    if (typeof window !== "undefined") {
+      localStorage.setItem("showResult", JSON.stringify(showResult));
+    }
   }, [showResult]);
 
   //getting the state from local storage
   useEffect(() => {
-    const savedCurrentQuestionIndex = localStorage.getItem(
-      "currentQuestionIndex"
-    );
-    const savedSelectedAnswers = localStorage.getItem("selectedAnswers");
-    const savedMinutes = localStorage.getItem("minutes");
-    const savedSeconds = localStorage.getItem("seconds");
-    const savedShowResult = localStorage.getItem("showResult");
+    if (typeof window !== "undefined") {
+      const savedCurrentQuestionIndex = localStorage.getItem(
+        "currentQuestionIndex"
+      );
+      const savedSelectedAnswers = localStorage.getItem("selectedAnswers");
+      const savedMinutes = localStorage.getItem("minutes");
+      const savedSeconds = localStorage.getItem("seconds");
+      const savedShowResult = localStorage.getItem("showResult");
 
-    if (savedCurrentQuestionIndex !== null) {
-      setCurrentQuestionIndex(JSON.parse(savedCurrentQuestionIndex));
-    }
-    if (savedSelectedAnswers !== null) {
-      setSelectedAnswers(JSON.parse(savedSelectedAnswers));
-    }
-    if (savedMinutes !== null) {
-      setMinutes(JSON.parse(savedMinutes));
-    }
-    if (savedSeconds !== null) {
-      setSeconds(JSON.parse(savedSeconds));
-    }
-    if (savedShowResult !== null) {
-      setShowResult(JSON.parse(savedShowResult));
+      if (savedCurrentQuestionIndex !== null) {
+        setCurrentQuestionIndex(JSON.parse(savedCurrentQuestionIndex));
+      }
+      if (savedSelectedAnswers !== null) {
+        setSelectedAnswers(JSON.parse(savedSelectedAnswers));
+      }
+      if (savedMinutes !== null) {
+        setMinutes(JSON.parse(savedMinutes));
+      }
+      if (savedSeconds !== null) {
+        setSeconds(JSON.parse(savedSeconds));
+      }
+      if (savedShowResult !== null) {
+        setShowResult(JSON.parse(savedShowResult));
+      }
     }
   }, []);
 
   //removing the state when the quiz is over
   useEffect(() => {
     if (showResult) {
-      localStorage.removeItem("currentQuestionIndex");
-      localStorage.removeItem("selectedAnswers");
-      localStorage.removeItem("minutes");
-      localStorage.removeItem("seconds");
-      localStorage.removeItem("showResult");
+      if (typeof window !== "undefined") {
+        localStorage.removeItem("currentQuestionIndex");
+        localStorage.removeItem("selectedAnswers");
+        localStorage.removeItem("minutes");
+        localStorage.removeItem("seconds");
+        localStorage.removeItem("showResult");
+      }
     }
   }, [showResult]);
 
